@@ -7,7 +7,8 @@ class City < ActiveRecord::Base
   #Methods
 
   #Check to see what the best cost and method is (individual trips/day pass/weekpass)
-  #TODO: This method is very rudimentary and does not allow for combining methods (e.g., staying for 8 days does not consider getting a 1 week pass followed by a day pass)
+  #TODO: This method is very rudimentary and does not allow for combining methods 
+  #  (e.g., staying for 8 days does not consider getting a 1 week pass followed by a day pass)
   def best_fare(days, trips)
     best_cost = nil
     best_method = nil
@@ -26,8 +27,30 @@ class City < ActiveRecord::Base
       end
     end
 
-    return best_cost, best_method
+    return best_cost, best_method, best_method_text(best_method, best_cost), best_cost_text(best_method, best_cost)
 
+  end
+
+  #Text Generators: 
+  #Models should be able to describe themselves.
+  #Text generators should be named as follows: <function>_text
+
+  def best_method_text method, cost
+    case method
+    when 0
+      return "You should get a " + self.card_name + " and make a deposit of " + ActionController::Base.helpers.number_to_currency(cost) + "."
+    else
+      return "You should get a " + self.card_name + " and load a " + method.to_s + "-day pass onto it."
+    end
+  end
+
+  def best_cost_text method, cost
+    case method
+    when 0
+      return ""
+    else
+      return "A " + method.to_s + "-day pass costs " + ActionController::Base.helpers.number_to_currency(cost) + "."
+    end
   end
 
 end

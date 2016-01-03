@@ -9,24 +9,31 @@
         %div.col-md-6
           .panel
             .panel-body
-              .row
-                ="How long will you be visiting " + @city.name + "?"
-              .row
-                ="Approximately, how many transit trips do you expect to take?"
+              =form_tag(best_fare_city_path, id: 'best_fare_form', method: "get") do 
+                %div.row
+                  %div.col-md-10
+                    %strong{:style => "font-size:20px"}
+                      ="How many days will you be visiting " + @city.name + "?"
+                  %div.col-md-2   
+                    %input{:type => "integer", :name => 'days', :value => 1, :style=>"width:100%;", :maxlength => "100"}
+                %div.row
+                  %div.col-md-10
+                    %strong{:style => "font-size:20px"}
+                      ="Approximately, how many transit trips do you expect to take?"
+                  %div.col-md-2   
+                    %input{:type => "integer", :name => 'trips', :value => 2, :style=>"width:100%;", :maxlength => "100"}
         %div.col-md-3
     .row
-      %a.btn.btn-dark.btn-lg{:href => "#about"} Submit
+      %a.btn.btn-dark.btn-lg{:href => "#about", id: 'submit_best_fare'} Submit
 
 / About
 %section#about.about
   .container
     .row
       .col-lg-12.text-center
-        %h2 Stylish Portfolio is the perfect theme for your next project!
-        %p.lead
-          This theme features some wonderful photography courtesy of
-          = succeed "." do
-            %a{:href => "http://join.deathtothestockphoto.com/", :target => "_blank"} Death to the Stock Photo
+        %h2#method_text
+          ="Complete the form above to find your best fare option for visiting " + @city.name + '.'
+        %p.lead#cost_text
     / /.row
   / /.container
 / Services
@@ -149,5 +156,29 @@
                 %i.fa.fa-dribbble.fa-fw.fa-3x
           %hr.small
             %p.text-muted Copyright &copy; Your Website 2014
+
+:javascript 
+
+  $(document).ready(function(){
+
+      $("#submit_best_fare").click(function(){
+      $.ajax({
+           type: 'GET',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/best_fare',
+           data: $('#best_fare_form').serialize(), 
+           success: function(response) {
+              $("#method_text").text(response['method_text']);
+              $("#cost_text").text(response['cost_text']);
+
+           },
+          error: function() {
+               //$("#commentList").append($("#name").val() + "<br/>" + $("#body").val());
+              alert("There was an error submitting comment");
+          }
+      });
+    });
+  });
+
+
 
     

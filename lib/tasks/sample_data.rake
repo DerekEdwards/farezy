@@ -3,9 +3,11 @@ namespace :farezy do
   task create_sample_data: :environment do
     
     #Atlanta
+    puts "Creating/updating Atlanta . . . "
     c = City.find_or_create_by(name: "Atlanta")
     c.image_url = "http://7-themes.com/data_images/out/17/6825086-atlanta-wallpaper.jpg"
     c.font_color_hex = "#FFFFFF"
+    c.card_name = "Breeze Card"
     c.save
 
     fare = Fare.find_or_initialize_by(city: c)
@@ -20,9 +22,11 @@ namespace :farezy do
     end
 
     #Boston
+    puts "Creating/updating Boston . . . "
     c = City.find_or_create_by(name: "Boston")
     c.image_url = "http://7-themes.com/data_images/out/60/6978212-boston-city-2013.jpg"
     c.font_color_hex = "#FFFFFF"
+    c.card_name = "Charlie Ticket"
     c.save
 
     fare = Fare.find_or_initialize_by(city: c)
@@ -36,6 +40,7 @@ namespace :farezy do
       dp.save
     end
 
+    puts "DONE"
 
   end
 end

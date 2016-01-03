@@ -11,18 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160103034439) do
+ActiveRecord::Schema.define(version: 20160103165618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cities", force: :cascade do |t|
-    t.string   "name",                               null: false
+    t.string   "name",                                    null: false
     t.text     "note"
     t.string   "image_url"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "font_color_hex", default: "#FFFFFF", null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "font_color_hex", default: "#FFFFFF",      null: false
+    t.string   "card_name",      default: "transit card", null: false
   end
 
   create_table "day_passes", force: :cascade do |t|

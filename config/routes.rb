@@ -7,6 +7,12 @@ Rails.application.routes.draw do
 
   resources :cities
 
+  resources :cities do
+    member do
+      get 'best_fare'
+    end
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
