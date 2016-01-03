@@ -3,6 +3,20 @@
   .text-vertical-center
     %h1{style: "color: #{@city.font_color_hex}"}
       =@city.name
+    .row
+      %h3
+        %div.col-md-3
+        %div.col-md-6
+          .panel
+            .panel-body
+              .row
+                ="How long will you be visiting " + @city.name + "?"
+              .row
+                ="Approximately, how many transit trips do you expect to take?"
+        %div.col-md-3
+    .row
+      %a.btn.btn-dark.btn-lg{:href => "#about"} Submit
+
 / About
 %section#about.about
   .container
