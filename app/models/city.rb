@@ -2,13 +2,7 @@ class City < ActiveRecord::Base
  
   #Associatitions
   has_one :fare
-  has_one :day_pass
-  has_one :week_pass
-
-  #Constants
-  INDIVIDUAL = 1
-  DAY_PASS = 2
-  WEEK_PASS = 3
+  has_many :day_passes
 
   #Methods
 
@@ -21,24 +15,14 @@ class City < ActiveRecord::Base
     #individual trips
     if self.fare.present?
       best_cost = trips*self.fare.cost
-      best_method = City::INDIVIDUAL
+      best_method = 0
     end
 
-    #day pass
-    if self.day_pass.present?
-      cost = days*self.day_pass.cost
+    self.day_passes.each do |day_pass|
+      cost = (days.to_f/day_pass.days.to_f).ceil*day_pass.cost
       if cost < best_cost
         best_cost = cost
-        best_method = City::DAY_PASS
-      end
-    end
-
-    #week pass
-    if self.week_pass.present?
-      cost = (days/7.0).ceil*self.week_pass.cost
-      if cost < best_cost
-        best_cost = cost
-        best_method = City::WEEK_PASS
+        best_method = day_pass.days
       end
     end
 
