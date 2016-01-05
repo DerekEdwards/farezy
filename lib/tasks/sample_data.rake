@@ -8,6 +8,7 @@ namespace :farezy do
     c.image_url = "http://7-themes.com/data_images/out/17/6825086-atlanta-wallpaper.jpg"
     c.font_color_hex = "#FFFFFF"
     c.card_name = "Breeze Card"
+    c.map_url = "http://40.media.tumblr.com/tumblr_ltqywcrHTc1r54c4oo1_1280.jpg"
     c.save
 
     fare = Fare.find_or_initialize_by(city: c)
@@ -27,6 +28,7 @@ namespace :farezy do
     c.image_url = "http://7-themes.com/data_images/out/60/6978212-boston-city-2013.jpg"
     c.font_color_hex = "#FFFFFF"
     c.card_name = "Charlie Ticket"
+    c.map_url = "http://www.mbta.com/images/subway-spider.jpg"
     c.save
 
     fare = Fare.find_or_initialize_by(city: c)

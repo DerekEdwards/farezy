@@ -42,7 +42,7 @@
   .container
     .row.text-center
       .col-lg-10.col-lg-offset-1
-        %h2 Our Services
+        %h2 This section will contain a step-by-step guide to using the fare machines
         %hr.small
           .row
             .col-md-3.col-sm-6
@@ -86,39 +86,9 @@
     / /.row
   / /.container
 / Callout
-%aside.callout
-  .text-vertical-center
-    %h1 Vertically Centered Text
-/ Portfolio
-%section#portfolio.portfolio
-  .container
-    .row
-      .col-lg-10.col-lg-offset-1.text-center
-        %h2 Our Work
-        %hr.small
-          .row
-            .col-md-6
-              .portfolio-item
-                %a{:href => "#"}
-                  %img.img-portfolio.img-responsive{:src => "/assets/portfolio-1.jpg"}
-            .col-md-6
-              .portfolio-item
-                %a{:href => "#"}
-                  %img.img-portfolio.img-responsive{:src => "/assets/portfolio-2.jpg"}
-            .col-md-6
-              .portfolio-item
-                %a{:href => "#"}
-                  %img.img-portfolio.img-responsive{:src => "/assets/portfolio-3.jpg"}
-            .col-md-6
-              .portfolio-item
-                %a{:href => "#"}
-                  %img.img-portfolio.img-responsive{:src => "/assets/portfolio-4.jpg"}
-          / /.row (nested)
-          %a.btn.btn-dark{:href => "#"} View More Items
-      / /.col-lg-10
-    / /.row
-  / /.container
-/ Call to Action
+%section.map-section
+  =image_tag @city.map_url
+
 %aside.call-to-action.bg-primary
   .container
     .row
