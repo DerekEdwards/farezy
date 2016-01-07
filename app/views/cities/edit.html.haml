@@ -1,0 +1,76 @@
+%header
+  %center
+    %h1
+      ="Edit " + @city.name
+%div.row
+  %div.col-md-2
+  %div.col-md-8
+    .panel
+      .panel-heading
+        %h3
+          City Details
+      .panel-body
+        =form_tag(city_path, id: 'city_details_form', method: "patch") do 
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Name"
+            %div.col-md-8   
+              %input{:type => "string", :name => 'name', :value => @city.name, :style=>"width:100%;", :maxlength => "100"}
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Note"
+            %div.col-md-8   
+              %textarea{:type => "text", :name => 'note', :value => @city.note, :style=>"width:100%;", :maxlength => "1000"}
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Image URL"
+            %div.col-md-8   
+              %input{:type => "string", :name => 'image_url', :value => @city.image_url, :style=>"width:100%;", :maxlength => "200"}
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Font Color Hex"
+            %div.col-md-8   
+              %input{:type => "string", :name => 'font_color_hex', :value => @city.font_color_hex, :style=>"width:100%;", :maxlength => "100"}
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Card Name"
+            %div.col-md-8   
+              %input{:type => "string", :name => 'card_name', :value => @city.card_name, :style=>"width:100%;", :maxlength => "100"}
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Map URL"
+            %div.col-md-8   
+              %input{:type => "string", :name => 'map_url', :value => @city.map_url, :style=>"width:100%;", :maxlength => "200"}
+
+
+%div.row
+  %center
+    %a.btn.btn-dark.btn-lg{id: 'update_city_details'} Update City Details
+
+:javascript 
+
+  $(document).ready(function(){
+
+      $("#update_city_details").click(function(){
+      $.ajax({
+           type: 'PATCH',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}',
+           data: $('#city_details_form').serialize(), 
+           success: function(response) {
+              $("#method_text").text(response['method_text']);
+              $("#cost_text").text(response['cost_text']);
+
+           },
+          error: function() {
+               //$("#commentList").append($("#name").val() + "<br/>" + $("#body").val());
+              alert("There was an error submitting comment");
+          }
+      });
+    });
+  });

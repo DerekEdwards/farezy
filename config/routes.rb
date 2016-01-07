@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :cities do
     member do
       get 'best_fare'
+      get 'edit'
     end
   end
 
