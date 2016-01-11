@@ -15,6 +15,20 @@ namespace :farezy do
     fare.cost = 2.50
     fare.save
 
+    #Create Fare Task
+    fare_task = Task.where(fare: fare).first_or_initialize
+    fare_task.save
+    fare_task.steps.destroy_all
+    steps = [{index: 1, title: "Find a Breeze Machine(need more info)", body: "Here is a picture of a breeze machine . . . <pic needed>"}, {index: 2, title: "Click buy a new Breeze Card", body: "Here is a picture of how to do that . . . <pic needed>"}, {index: 3, title: "Pay up!", body: "Here is a picture of how to do that . . . <pic needed>"}]   
+    steps.each do |step|
+      new_step = Step.new
+      new_step.index = step[:index]
+      new_step.title = step[:title]
+      new_step.body  = step[:body]
+      new_step.task = fare_task
+      new_step.save
+    end
+
     day_passes = [{days: 1, cost: 9}, {days: 2, cost: 14}, {days: 3, cost: 16}, {days: 4, cost: 19}, {days: 7, cost: 23.75}]
     day_passes.each do |day_pass|
       dp = DayPass.find_or_initialize_by(city: c, days: day_pass[:days])
