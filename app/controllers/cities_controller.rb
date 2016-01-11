@@ -32,8 +32,8 @@ class CitiesController < ApplicationController
     days = params[:days].to_i
     trips = params[:trips].to_i
 
-    cost, method, method_text, cost_text = @city.best_fare days, trips
-    result = {cost: cost, method: method, method_text: method_text, cost_text: cost_text}
+    cost, method, method_text, cost_text, task = @city.best_fare days, trips
+    result = {cost: cost, method: method, method_text: method_text, cost_text: cost_text, task: task.as_json}
 
     respond_to do |format|
       format.json { render json: result.to_json }

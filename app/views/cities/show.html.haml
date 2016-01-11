@@ -38,7 +38,7 @@
   / /.container
 / Services
 / The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/
-%section#services.services.bg-primary
+%section#steps.services.bg-primary
   .container
     .row.text-center
       .col-lg-10.col-lg-offset-1
@@ -139,6 +139,25 @@
            success: function(response) {
               $("#method_text").text(response['method_text']);
               $("#cost_text").text(response['cost_text']);
+
+              task = response['task'];
+              if (task == null){
+                steps = [];
+                html_content = "No information is available to assist with this task." 
+              }else{
+                html_content = "" 
+                steps = task['steps'];
+              }
+              
+              for(var i = 0; i < steps.length; i++) {
+                html_content += "<h3> Step " + i + " "
+                html_content += steps[i]['title'];
+                html_content += "</h3>"
+                html_content += steps[i]['body'];
+              };
+
+              $("#steps").html(html_content);
+
 
            },
           error: function() {

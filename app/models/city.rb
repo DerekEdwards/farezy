@@ -12,11 +12,13 @@ class City < ActiveRecord::Base
   def best_fare(days, trips)
     best_cost = nil
     best_method = nil
+    best_task = nil
 
     #individual trips
     if self.fare.present?
       best_cost = trips*self.fare.cost
       best_method = 0
+      best_task = self.fare.task
     end
 
     self.day_passes.each do |day_pass|
@@ -24,10 +26,11 @@ class City < ActiveRecord::Base
       if cost < best_cost
         best_cost = cost
         best_method = day_pass.days
+        best_task = day_pass.task
       end
     end
 
-    return best_cost, best_method, best_method_text(best_method, best_cost), best_cost_text(best_method, best_cost)
+    return best_cost, best_method, best_method_text(best_method, best_cost), best_cost_text(best_method, best_cost), best_task
 
   end
 
