@@ -37,7 +37,6 @@ class City < ActiveRecord::Base
   #Text Generators: 
   #Models should be able to describe themselves.
   #Text generators should be named as follows: <function>_text
-
   def best_method_text method, cost
     case method
     when 0

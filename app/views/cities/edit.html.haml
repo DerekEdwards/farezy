@@ -8,11 +8,10 @@
 %div.row
   %div.col-md-2
   %div.col-md-8
+    %h2
+      City Details
     .panel
-      .panel-heading
-        %h3
-          City Details
-      .panel-body
+      .panel-body.edit-page-panel
         =form_tag(city_path, id: 'city_details_form', method: "patch") do 
           %div.row
             %div.col-md-4
@@ -60,11 +59,10 @@
 %div.row
   %div.col-md-2
   %div.col-md-8
+    %h2
+      1-Way Fare
     .panel
-      .panel-heading
-        %h3
-          1-Way Fare
-      .panel-body
+      .panel-body.edit-page-panel
         =form_tag(city_path, id: 'fare_form', method: "patch") do 
           %div.row
             %div.col-md-4
@@ -79,22 +77,38 @@
     %a.btn.btn-dark.btn-lg{id: 'update_fare'} Update Fare
 
 // DAY PASSES CLUB
-
 %div.row
   %div.col-md-2
   %div.col-md-8
-    .panel
-      .panel-heading
-        %h3
-          Day Passes
-      .panel-body
-        -@city.day_passes.each do |day_pass|
-          %div.row
-            =day_pass.days
-            =day_pass.cost
-            -day_pass.task.steps.each do |step|
-              =step.title
-              =step.body
+    %h2
+      Day Passes
+
+-@city.day_passes.each do |day_pass|
+  %div.row
+    %div.col-md-2
+    %div.col-md-8
+      %h3
+        =day_pass.days.to_s + '-Day Pass'
+      .panel  
+        .panel-body.edit-page-panel
+          =form_tag(city_path, id: 'day_pass_form_' + day_pass.id.to_s, method: "patch") do 
+            %div.row
+              %div.col-md-4
+                %strong{:style => "font-size:20px"}
+                  ="Cost of Pass"
+              %div.col-md-8   
+                %input{:type => "float", :name => 'cost', :value => day_pass.cost, :style=>"width:100%;", :maxlength => "200"}
+            %div.row
+              %div.col-md-4
+                %strong{:style => "font-size:20px"}
+                  ="Number of Days"
+              %div.col-md-8   
+                %input{:type => "integer", :name => 'days', :value => day_pass.days, :style=>"width:100%;", :maxlength => "200"}
+
+  %div.row
+    %center
+      %a.btn.btn-dark.btn-lg.update_day_pass{id: day_pass.id} 
+        ="Update " + day_pass.days.to_s + "-Day Pass"
 
 :javascript 
 
@@ -107,13 +121,11 @@
            url: '#{root_url}' + 'cities/' + '#{@city.id}',
            data: $('#city_details_form').serialize(), 
            success: function(response) {
-              $("#method_text").text(response['method_text']);
-              $("#cost_text").text(response['cost_text']);
+             console.log('success');
 
            },
           error: function() {
-               //$("#commentList").append($("#name").val() + "<br/>" + $("#body").val());
-              alert("There was an error submitting comment");
+              alert("There was an error submitting.");
           }
       });
     });
@@ -128,13 +140,30 @@
            url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/update_fare',
            data: $('#fare_form').serialize(), 
            success: function(response) {
-              $("#method_text").text(response['method_text']);
-              $("#cost_text").text(response['cost_text']);
+            console.log('success');
 
            },
           error: function() {
-               //$("#commentList").append($("#name").val() + "<br/>" + $("#body").val());
-              alert("There was an error submitting comment");
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });
+
+  // Update Day Pass Button
+  $(document).ready(function(){
+
+      $(".update_day_pass").click(function(){
+      $.ajax({
+           type: 'PATCH',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.id,
+           data: $('#day_pass_form_' + this.id).serialize(), 
+           success: function(response) {
+             console.log('success');
+
+           },
+          error: function() {
+              alert("There was an error submitting.");
           }
       });
     });

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root to: 'cities#index'
 
-  resources :cities
+  resources :cities do
+    resources :day_passes
+  end
 
   resources :cities do
     member do
