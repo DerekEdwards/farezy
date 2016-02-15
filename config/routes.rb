@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     member do
       get 'best_fare'
       get 'edit'
+      patch 'update_fare'
     end
   end
 

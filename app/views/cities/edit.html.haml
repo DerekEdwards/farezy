@@ -2,6 +2,9 @@
   %center
     %h1
       ="Edit " + @city.name
+
+// CITY DETAILS FORM
+
 %div.row
   %div.col-md-2
   %div.col-md-8
@@ -48,13 +51,54 @@
             %div.col-md-8   
               %input{:type => "string", :name => 'map_url', :value => @city.map_url, :style=>"width:100%;", :maxlength => "200"}
 
-
 %div.row
   %center
     %a.btn.btn-dark.btn-lg{id: 'update_city_details'} Update City Details
 
+// FARE FORM
+
+%div.row
+  %div.col-md-2
+  %div.col-md-8
+    .panel
+      .panel-heading
+        %h3
+          1-Way Fare
+      .panel-body
+        =form_tag(city_path, id: 'fare_form', method: "patch") do 
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Single Trip Fare"
+            %div.col-md-8   
+              %input{:type => "float", :name => 'fare', :value => (@city.fare.present? ? @city.fare.cost : ""), :style=>"width:100%;", :maxlength => "200"}
+
+
+%div.row
+  %center
+    %a.btn.btn-dark.btn-lg{id: 'update_fare'} Update Fare
+
+// DAY PASSES CLUB
+
+%div.row
+  %div.col-md-2
+  %div.col-md-8
+    .panel
+      .panel-heading
+        %h3
+          Day Passes
+      .panel-body
+        -@city.day_passes.each do |day_pass|
+          %div.row
+            =day_pass.days
+            =day_pass.cost
+            -day_pass.task.steps.each do |step|
+              =step.title
+              =step.body
+
 :javascript 
 
+  // Update City Details Button
   $(document).ready(function(){
 
       $("#update_city_details").click(function(){
@@ -62,6 +106,27 @@
            type: 'PATCH',
            url: '#{root_url}' + 'cities/' + '#{@city.id}',
            data: $('#city_details_form').serialize(), 
+           success: function(response) {
+              $("#method_text").text(response['method_text']);
+              $("#cost_text").text(response['cost_text']);
+
+           },
+          error: function() {
+               //$("#commentList").append($("#name").val() + "<br/>" + $("#body").val());
+              alert("There was an error submitting comment");
+          }
+      });
+    });
+  });
+
+  // Update City Fare Button
+  $(document).ready(function(){
+
+      $("#update_fare").click(function(){
+      $.ajax({
+           type: 'PATCH',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/update_fare',
+           data: $('#fare_form').serialize(), 
            success: function(response) {
               $("#method_text").text(response['method_text']);
               $("#cost_text").text(response['cost_text']);
