@@ -22,12 +22,6 @@
           %div.row
             %div.col-md-4
               %strong{:style => "font-size:20px"}
-                ="Note"
-            %div.col-md-8   
-              %textarea{:type => "text", :name => 'note', :value => @city.note, :style=>"width:100%;", :maxlength => "1000"}
-          %div.row
-            %div.col-md-4
-              %strong{:style => "font-size:20px"}
                 ="Image URL"
             %div.col-md-8   
               %input{:type => "string", :name => 'image_url', :value => @city.image_url, :style=>"width:100%;", :maxlength => "200"}
@@ -109,14 +103,17 @@
     %center
       %a.btn.btn-dark.btn-lg.update_day_pass{id: day_pass.id} 
         ="Update " + day_pass.days.to_s + "-Day Pass"
+  %br
+  %div.row
+    %center
+      %a.btn.btn-dark.btn-sm.delete_day_pass{id: day_pass.id} 
+        ="Delete " + day_pass.days.to_s + "-Day Pass"
 
-%br
-%br
 %div.row
   %div.col-md-2
   %div.col-md-8
     %h3
-      ='Create New Day Pass'
+      ='Create New Multi-Day Pass'
     .panel  
       .panel-body.edit-page-panel
         =form_tag(city_path, id: 'new_day_pass_form', method: "post") do 
@@ -150,6 +147,7 @@
            data: $('#city_details_form').serialize(), 
            success: function(response) {
              console.log('success');
+             location.reload();
 
            },
           error: function() {
@@ -169,6 +167,7 @@
            data: $('#fare_form').serialize(), 
            success: function(response) {
             console.log('success');
+            location.reload();
 
            },
           error: function() {
@@ -187,7 +186,26 @@
            url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.id,
            data: $('#day_pass_form_' + this.id).serialize(), 
            success: function(response) {
-             console.log('success');
+             location.reload();
+
+           },
+          error: function() {
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });
+
+  // Delete Day Pass Button
+  $(document).ready(function(){
+
+      $(".delete_day_pass").click(function(){
+      $.ajax({
+           type: 'DELETE',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.id,
+           data: $('#day_pass_form_' + this.id).serialize(), 
+           success: function(response) {
+             location.reload();
 
            },
           error: function() {
