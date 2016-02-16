@@ -110,6 +110,34 @@
       %a.btn.btn-dark.btn-lg.update_day_pass{id: day_pass.id} 
         ="Update " + day_pass.days.to_s + "-Day Pass"
 
+%br
+%br
+%div.row
+  %div.col-md-2
+  %div.col-md-8
+    %h3
+      ='Create New Day Pass'
+    .panel  
+      .panel-body.edit-page-panel
+        =form_tag(city_path, id: 'new_day_pass_form', method: "post") do 
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Cost of Pass"
+            %div.col-md-8   
+              %input{:type => "float", :name => 'cost', :value => "", :style=>"width:100%;", :maxlength => "200"}
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Number of Days"
+            %div.col-md-8   
+              %input{:type => "integer", :name => 'days', :value => "", :style=>"width:100%;", :maxlength => "200"}
+%div.row
+  %center
+    %a.btn.btn-dark.btn-lg{id: 'create_new_day_pass'} 
+      ="Create"
+%br
+
 :javascript 
 
   // Update City Details Button
@@ -161,6 +189,25 @@
            success: function(response) {
              console.log('success');
 
+           },
+          error: function() {
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });
+
+  // Create New Day Pass Button
+  $(document).ready(function(){
+
+      $("#create_new_day_pass").click(function(){
+      $.ajax({
+           type: 'POST',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/',
+           data: $('#new_day_pass_form').serialize(), 
+           success: function(response) {
+             console.log('success');
+             location.reload();
            },
           error: function() {
               alert("There was an error submitting.");
