@@ -12,6 +12,15 @@ class StepsController < ApplicationController
     end
   end
 
+  def create
+    new_attributes = {index: params[:index], title: params[:title], body: params[:body], task: @day_pass.task}
+    @step = Step.create(new_attributes)
+
+    respond_to do |format|
+      format.json { render json: {result: 200}}
+    end
+  end
+
   def destroy
     @step.delete
 
