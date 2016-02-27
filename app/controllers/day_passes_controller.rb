@@ -17,6 +17,7 @@ class DayPassesController < ApplicationController
     #Create New Day Pass
     new_attributes = {days: params[:days], cost: params[:cost], city: @city}
     @day_pass = DayPass.create(new_attributes)
+    @task = Task.create(day_pass: @day_pass)
 
     respond_to do |format|
       format.json { render json: {result: 200}}

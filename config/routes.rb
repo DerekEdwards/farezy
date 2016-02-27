@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   root to: 'cities#index'
 
   resources :cities do
-    resources :day_passes
+    resources :day_passes do
+      resources :steps
+    end
   end
 
   resources :cities do

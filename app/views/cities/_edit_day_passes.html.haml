@@ -1,0 +1,215 @@
+// DAY PASSES CLUB
+%div.row
+  %div.col-md-2
+  %div.col-md-8
+    %h2
+      Multi-Day Passes
+
+-@city.day_passes.each do |day_pass|
+  %div.row
+    %div.col-md-2
+    %div.col-md-8
+      %h3
+        =day_pass.days.to_s + '-Day Pass'
+      .panel
+        .panel-body.edit-page-panel
+          %div.row
+            %div.col-md-1
+            %div.col-md-10
+              %h3
+                =day_pass.days.to_s + '-Day Pass Details'
+              .panel  
+                .panel-body.task-panel
+                  =form_tag(city_path, id: 'day_pass_form_' + day_pass.id.to_s, method: "patch") do 
+                    %div.row
+                      %div.col-md-4
+                        %strong{:style => "font-size:20px"}
+                          ="Cost of Pass"
+                      %div.col-md-8  
+                        %input{:type => "float", :name => 'cost', :value => day_pass.cost, :style=>"width:100%;", :maxlength => "200"}
+                    %div.row
+                      %div.col-md-4
+                        %strong{:style => "font-size:20px"}
+                          ="Number of Days"
+                      %div.col-md-8   
+                        %input{:type => "integer", :name => 'days', :value => day_pass.days, :style=>"width:100%;", :maxlength => "200"}
+          %div.row
+            %center
+              %a.btn.btn-dark.btn-lg.update_day_pass{id: day_pass.id} 
+                ="Update " + day_pass.days.to_s + "-Day Pass"
+          %br
+          %div.row
+            %center
+              %a.btn.btn-dark.btn-sm.delete_day_pass{id: day_pass.id} 
+                ="Delete " + day_pass.days.to_s + "-Day Pass"              
+          
+          
+          // Task & STEPS START HERE
+          %div.row
+            %div.col-md-1
+            %div.col-md-10
+              %h3
+                =day_pass.days.to_s + '-Day Pass Task'
+              -if day_pass.task
+                -day_pass.task.steps.each do |step|
+                  %h4
+                    ="Step " + step.index.to_s
+                  .panel
+                    .panel-body.task-panel
+                      =form_tag(city_path, id: 'step_form_' + step.id.to_s, method: "patch") do 
+                        %div.row
+                          %div.col-md-4
+                            %strong{:style => "font-size:20px"}
+                              ="Index"
+                          %div.col-md-8
+                            %input{:type => "integer", :name => 'index', :value => step.index, :style=>"width:100%;", :maxlength => "200"}
+                        %div.row
+                          %div.col-md-4
+                            %strong{:style => "font-size:20px"}
+                              ="Title"
+                          %div.col-md-8
+                            %input{:type => "string", :name => 'title', :value => step.title, :style=>"width:100%;", :maxlength => "200"}
+                        %div.row
+                          %div.col-md-4
+                            %strong{:style => "font-size:20px"}
+                              ="Body"
+                          %div.col-md-8
+                            %textarea{:rows => 5, :name => 'body', :style=>"width:100%;"}
+                              =step.body
+
+                  %div.row
+                    %center
+                      %a.btn.btn-dark.btn-lg.update_step{id: step.id, day_pass_id: day_pass.id} 
+                        ="Update Step " + step.index.to_s 
+                  %br
+                  %div.row
+                    %center
+                      %a.btn.btn-dark.btn-sm.delete_step{id: step.id, day_pass_id: day_pass.id} 
+                        ="Delete Step " + step.index.to_s
+          
+              -else
+                No Task Associated
+
+
+%div.row
+  %div.col-md-2
+  %div.col-md-8
+    %h3
+      ='Create New Multi-Day Pass'
+    .panel  
+      .panel-body.edit-page-panel
+        =form_tag(city_path, id: 'new_day_pass_form', method: "post") do 
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Cost of Pass"
+            %div.col-md-8   
+              %input{:type => "float", :name => 'cost', :value => "", :style=>"width:100%;", :maxlength => "200"}
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Number of Days"
+            %div.col-md-8   
+              %input{:type => "integer", :name => 'days', :value => "", :style=>"width:100%;", :maxlength => "200"}
+%div.row
+  %center
+    %a.btn.btn-dark.btn-lg{id: 'create_new_day_pass'} 
+      ="Create"
+%br
+
+:javascript 
+
+
+  // Update Day Pass Button
+  $(document).ready(function(){
+
+      $(".update_day_pass").click(function(){
+      $.ajax({
+           type: 'PATCH',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.id,
+           data: $('#day_pass_form_' + this.id).serialize(), 
+           success: function(response) {
+             location.reload();
+
+           },
+          error: function() {
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });
+
+  // Delete Day Pass Button
+  $(document).ready(function(){
+
+      $(".delete_day_pass").click(function(){
+      $.ajax({
+           type: 'DELETE',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.id,
+           data: $('#day_pass_form_' + this.id).serialize(), 
+           success: function(response) {
+             location.reload();
+
+           },
+          error: function() {
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });
+
+  // Update Step Button
+  $(document).ready(function(){
+
+      $(".update_step").click(function(){
+      $.ajax({
+           type: 'PATCH',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.getAttribute('day_pass_id') + '/steps/' + this.id,
+           data: $('#step_form_' + this.id).serialize(), 
+           success: function(response) {
+             location.reload();
+           },
+          error: function() {
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });
+
+  // Delete Step Button
+  $(document).ready(function(){
+
+      $(".delete_step").click(function(){
+      $.ajax({
+           type: 'DELETE',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.getAttribute('day_pass_id') + '/steps/' + this.id,
+           data: $('#step_form_' + this.id).serialize(), 
+           success: function(response) {
+             location.reload();
+
+           },
+          error: function() {
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });
+
+  // Create New Day Pass Button
+  $(document).ready(function(){
+
+      $("#create_new_day_pass").click(function(){
+      $.ajax({
+           type: 'POST',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/',
+           data: $('#new_day_pass_form').serialize(), 
+           success: function(response) {
+             console.log('success');
+             location.reload();
+           },
+          error: function() {
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });

@@ -1,0 +1,41 @@
+%div.row
+  %div.col-md-2
+  %div.col-md-8
+    %h2
+      1-Way Fare
+    .panel
+      .panel-body.edit-page-panel
+        =form_tag(city_path, id: 'fare_form', method: "patch") do 
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Single Trip Fare"
+            %div.col-md-8   
+              %input{:type => "float", :name => 'fare', :value => (@city.fare.present? ? @city.fare.cost : ""), :style=>"width:100%;", :maxlength => "200"}
+
+
+%div.row
+  %center
+    %a.btn.btn-dark.btn-lg{id: 'update_fare'} Update Fare
+
+:javascript
+
+  // Update City Fare Button
+  $(document).ready(function(){
+
+      $("#update_fare").click(function(){
+      $.ajax({
+           type: 'PATCH',
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/update_fare',
+           data: $('#fare_form').serialize(), 
+           success: function(response) {
+            console.log('success');
+            location.reload();
+
+           },
+          error: function() {
+              alert("There was an error submitting.");
+          }
+      });
+    });
+  });
