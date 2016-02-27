@@ -38,86 +38,15 @@
               %a.btn.btn-dark.btn-lg.update_day_pass{id: day_pass.id} 
                 ="Update " + day_pass.days.to_s + "-Day Pass Details"           
           
-          
           // Task & STEPS START HERE
-          %div.row
-            %div.col-md-1
-            %div.col-md-10
-              %h3
-                =day_pass.days.to_s + '-Day Pass Task'
-              -if day_pass.task
-                -day_pass.task.steps.each do |step|
-                  %h4
-                    ="Step " + step.index.to_s
-                  .panel
-                    .panel-body.task-panel
-                      =form_tag(city_path, id: 'step_form_' + step.id.to_s, method: "patch") do 
-                        %div.row
-                          %div.col-md-4
-                            %strong{:style => "font-size:20px"}
-                              ="Step Number"
-                          %div.col-md-8
-                            %input{:type => "integer", :name => 'index', :value => step.index, :style=>"width:100%;", :maxlength => "200"}
-                        %div.row
-                          %div.col-md-4
-                            %strong{:style => "font-size:20px"}
-                              ="Title"
-                          %div.col-md-8
-                            %input{:type => "string", :name => 'title', :value => step.title, :style=>"width:100%;", :maxlength => "200"}
-                        %div.row
-                          %div.col-md-4
-                            %strong{:style => "font-size:20px"}
-                              ="Body"
-                          %div.col-md-8
-                            %textarea{:rows => 5, :name => 'body', :style=>"width:100%;"}
-                              =step.body
-
-                  %div.row
-                    %center
-                      %a.btn.btn-dark.btn-lg.update_step{id: step.id, day_pass_id: day_pass.id} 
-                        ="Update Step " + step.index.to_s 
-                  %br
-                  %div.row
-                    %center
-                      %a.btn.btn-danger.btn-sm.delete_step{id: step.id, day_pass_id: day_pass.id} 
-                        ="Delete Step " + step.index.to_s
-          %div.row
-            %div.col-md-1
-            %div.col-md-10
-              %h3
-                ='Create New Step'
-              .panel  
-                .panel-body.task-panel
-                  =form_tag(city_path, id: 'new_step_form_' + day_pass.id.to_s,  method: "post") do 
-                    %div.row
-                      %div.col-md-4
-                        %strong{:style => "font-size:20px"}
-                          ="Step Number"
-                      %div.col-md-8   
-                        %input{:type => "integer", :name => 'index', :value => "", :style=>"width:100%;", :maxlength => "200"}
-                    %div.row
-                      %div.col-md-4
-                        %strong{:style => "font-size:20px"}
-                          ="Title"
-                      %div.col-md-8   
-                        %input{:type => "string", :name => 'title', :value => "", :style=>"width:100%;", :maxlength => "200"}
-                    %div.row
-                      %div.col-md-4
-                        %strong{:style => "font-size:20px"}
-                          ="Body"
-                      %div.col-md-8
-                        %textarea{:rows => 5, :name => 'body', :style=>"width:100%;"}
-                     
-          %div.row
-            %center
-              %a.btn.btn-dark.btn-lg.create_new_step{day_pass_id: day_pass.id}
-                ="Create Step"
-          
+          =render partial: 'edit_steps', locals: {day_pass: day_pass}
 
       %div.row
         %center
           %a.btn.btn-danger.btn-sm.delete_day_pass{id: day_pass.id} 
-            ="Delete " + day_pass.days.to_s + "-Day Pass"   
+            ="Delete " + day_pass.days.to_s + "-Day Pass"  
+
+=render partial: 'edit_steps_js'
 
 
 %div.row
@@ -179,62 +108,6 @@
            success: function(response) {
              location.reload();
 
-           },
-          error: function() {
-              alert("There was an error submitting.");
-          }
-      });
-    });
-  });
-
-  // Update Step Button
-  $(document).ready(function(){
-
-      $(".update_step").click(function(){
-      $.ajax({
-           type: 'PATCH',
-           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.getAttribute('day_pass_id') + '/steps/' + this.id,
-           data: $('#step_form_' + this.id).serialize(), 
-           success: function(response) {
-             location.reload();
-           },
-          error: function() {
-              alert("There was an error submitting.");
-          }
-      });
-    });
-  });
-
-  // Delete Step Button
-  $(document).ready(function(){
-
-      $(".delete_step").click(function(){
-      $.ajax({
-           type: 'DELETE',
-           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.getAttribute('day_pass_id') + '/steps/' + this.id,
-           data: $('#step_form_' + this.id).serialize(), 
-           success: function(response) {
-             location.reload();
-
-           },
-          error: function() {
-              alert("There was an error submitting.");
-          }
-      });
-    });
-  });
-
-  // Create New Step
-  $(document).ready(function(){
-
-      $(".create_new_step").click(function(){
-      $.ajax({
-           type: 'POST',
-           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.getAttribute('day_pass_id') + '/steps/',
-           data: $('#new_step_form_' + this.getAttribute('day_pass_id')).serialize(), 
-           success: function(response) {
-             console.log('success');
-             location.reload();
            },
           error: function() {
               alert("There was an error submitting.");
