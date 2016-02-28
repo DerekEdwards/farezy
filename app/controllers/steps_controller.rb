@@ -1,7 +1,7 @@
 class StepsController < ApplicationController  
 
-  before_action :set_city_and_day_pass_and_step, only: [:update, :destroy]
-  before_action :set_city_and_day_pass, only: [:create]
+  before_action :set_city_and_task_and_step, only: [:update, :destroy]
+  before_action :set_city_and_task, only: [:create]
 
   def update
     new_attributes = {index: params[:index], title: params[:title], body: params[:body]}
@@ -13,7 +13,7 @@ class StepsController < ApplicationController
   end
 
   def create
-    new_attributes = {index: params[:index], title: params[:title], body: params[:body], task: @day_pass.task}
+    new_attributes = {index: params[:index], title: params[:title], body: params[:body], task: @task}
     @step = Step.create(new_attributes)
 
     respond_to do |format|
@@ -31,15 +31,15 @@ class StepsController < ApplicationController
 
   private
 
-  def set_city_and_day_pass_and_step
+  def set_city_and_task_and_step
     @city = City.find(params[:city_id])
-    @day_pass = DayPass.find(params[:day_pass_id])
+    @task = Task.find(params[:task_id])
     @step = Step.find(params[:id])
   end
 
-  def set_city_and_day_pass
+  def set_city_and_task
     @city = City.find(params[:city_id])
-    @day_pass = DayPass.find(params[:day_pass_id])
+    @task = Task.find(params[:task_id])
   end
 
 end

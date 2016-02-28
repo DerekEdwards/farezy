@@ -32,12 +32,12 @@
 
         %div.row
           %center
-            %a.btn.btn-dark.btn-lg.update_step{id: step.id, day_pass_id: day_pass.id} 
+            %a.btn.btn-dark.btn-lg.update_step{id: step.id, task_id: day_pass.task.id} 
               ="Update Step " + step.index.to_s 
         %br
         %div.row
           %center
-            %a.btn.btn-danger.btn-sm.delete_step{id: step.id, day_pass_id: day_pass.id} 
+            %a.btn.btn-danger.btn-sm.delete_step{id: step.id, task_id: day_pass.task.id} 
               ="Delete Step " + step.index.to_s
 %div.row
   %div.col-md-1
@@ -46,7 +46,7 @@
       ='Create New Step'
     .panel  
       .panel-body.task-panel
-        =form_tag(city_path, id: 'new_step_form_' + day_pass.id.to_s,  method: "post") do 
+        =form_tag(city_path, id: 'new_step_form_' + day_pass.task.id.to_s,  method: "post") do 
           %div.row
             %div.col-md-4
               %strong{:style => "font-size:20px"}
@@ -68,7 +68,7 @@
            
 %div.row
   %center
-    %a.btn.btn-dark.btn-lg.create_new_step{day_pass_id: day_pass.id}
+    %a.btn.btn-dark.btn-lg.create_new_step{task_id: day_pass.task.id}
       ="Create Step"
 
 

@@ -5,7 +5,7 @@
       $(".update_step").click(function(){
       $.ajax({
            type: 'PATCH',
-           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.getAttribute('day_pass_id') + '/steps/' + this.id,
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/tasks/' + this.getAttribute('task_id') + '/steps/' + this.id,
            data: $('#step_form_' + this.id).serialize(), 
            success: function(response) {
              location.reload();
@@ -23,7 +23,7 @@
       $(".delete_step").click(function(){
       $.ajax({
            type: 'DELETE',
-           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.getAttribute('day_pass_id') + '/steps/' + this.id,
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/tasks/' + this.getAttribute('task_id') + '/steps/' + this.id,
            data: $('#step_form_' + this.id).serialize(), 
            success: function(response) {
              location.reload();
@@ -42,8 +42,8 @@
       $(".create_new_step").click(function(){
       $.ajax({
            type: 'POST',
-           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/day_passes/' + this.getAttribute('day_pass_id') + '/steps/',
-           data: $('#new_step_form_' + this.getAttribute('day_pass_id')).serialize(), 
+           url: '#{root_url}' + 'cities/' + '#{@city.id}' + '/tasks/' + this.getAttribute('task_id') + '/steps/',
+           data: $('#new_step_form_' + this.getAttribute('task_id')).serialize(), 
            success: function(response) {
              console.log('success');
              location.reload();
