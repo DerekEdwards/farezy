@@ -7,16 +7,92 @@
       .panel-body.edit-page-panel
         =form_tag(city_path, id: 'fare_form', method: "patch") do 
           %div.row
-            %div.col-md-4
-              %strong{:style => "font-size:20px"}
-                ="Single Trip Fare"
-            %div.col-md-8   
-              %input{:type => "float", :name => 'fare', :value => (@city.fare.present? ? @city.fare.cost : ""), :style=>"width:100%;", :maxlength => "200"}
+            %div.col-md-1
+            %div.col-md-10
+              .panel
+                .panel-body.task-panel
+                  %div.col-md-4
+                    %strong{:style => "font-size:20px"}
+                      ="Single Trip Fare"
+                  %div.col-md-8   
+                    %input{:type => "float", :name => 'fare', :value => (@city.fare.present? ? @city.fare.cost : ""), :style=>"width:100%;", :maxlength => "200"}
 
+        %div.row
+          %center
+            %a.btn.btn-dark.btn-lg{id: 'update_fare'} Update Fare
 
-%div.row
-  %center
-    %a.btn.btn-dark.btn-lg{id: 'update_fare'} Update Fare
+        %div.row
+          %div.col-md-1
+          %div.col-md-10
+            %h3
+              ='Fare Task'
+            -if @city.fare.present? and @city.fare.task.present?
+              -@city.fare.task.steps.each do |step|
+                %h4
+                  ="Step " + step.index.to_s
+                .panel
+                  .panel-body.task-panel
+                    =form_tag(city_path, id: 'step_form_' + step.id.to_s, method: "patch") do 
+                      %div.row
+                        %div.col-md-4
+                          %strong{:style => "font-size:20px"}
+                            ="Step Number"
+                        %div.col-md-8
+                          %input{:type => "integer", :name => 'index', :value => step.index, :style=>"width:100%;", :maxlength => "200"}
+                      %div.row
+                        %div.col-md-4
+                          %strong{:style => "font-size:20px"}
+                            ="Title"
+                        %div.col-md-8
+                          %input{:type => "string", :name => 'title', :value => step.title, :style=>"width:100%;", :maxlength => "200"}
+                      %div.row
+                        %div.col-md-4
+                          %strong{:style => "font-size:20px"}
+                            ="Body"
+                        %div.col-md-8
+                          %textarea{:rows => 5, :name => 'body', :style=>"width:100%;"}
+                            =step.body
+
+                %div.row
+                  %center
+                    %a.btn.btn-dark.btn-lg.update_step{id: step.id, task_id: step.task.id} 
+                      ="Update Step " + step.index.to_s 
+                %br
+                %div.row
+                  %center
+                    %a.btn.btn-danger.btn-sm.delete_step{id: step.id, task_id: step.task.id} 
+                      ="Delete Step " + step.index.to_s
+        %div.row
+          %div.col-md-1
+          %div.col-md-10
+            %h3
+              ='Create New Step'
+            .panel  
+              .panel-body.task-panel
+                =form_tag(city_path, id: 'new_step_form_' + @city.fare.task.id.to_s,  method: "post") do 
+                  %div.row
+                    %div.col-md-4
+                      %strong{:style => "font-size:20px"}
+                        ="Step Number"
+                    %div.col-md-8   
+                      %input{:type => "integer", :name => 'index', :value => "", :style=>"width:100%;", :maxlength => "200"}
+                  %div.row
+                    %div.col-md-4
+                      %strong{:style => "font-size:20px"}
+                        ="Title"
+                    %div.col-md-8   
+                      %input{:type => "string", :name => 'title', :value => "", :style=>"width:100%;", :maxlength => "200"}
+                  %div.row
+                    %div.col-md-4
+                      %strong{:style => "font-size:20px"}
+                        ="Body"
+                    %div.col-md-8
+                      %textarea{:rows => 5, :name => 'body', :style=>"width:100%;"}
+                   
+        %div.row
+          %center
+            %a.btn.btn-dark.btn-lg.create_new_step{task_id: @city.fare.task.id}
+              ="Create Step"
 
 :javascript
 
