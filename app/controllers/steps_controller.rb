@@ -2,6 +2,7 @@ class StepsController < ApplicationController
 
   before_action :set_city_and_task_and_step, only: [:update, :destroy]
   before_action :set_city_and_task, only: [:create]
+  before_action :authenticate_user!
 
   def update
     new_attributes = {index: params[:index], title: params[:title], body: params[:body]}

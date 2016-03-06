@@ -2,6 +2,7 @@ class DayPassesController < ApplicationController
 
   before_action :set_city_and_day_pass, only: [:update, :destroy]
   before_action :set_city, only: [:create]
+  before_action :authenticate_user!
 
   def update
     #Update Day Pass
