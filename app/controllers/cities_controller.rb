@@ -3,7 +3,7 @@ class CitiesController < ApplicationController
   # GET /events.json
 
   before_action :set_city, only: [:show, :edit, :best_fare, :update, :update_fare]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :best_fare]
 
   def index
     logger.info("Index Event")
