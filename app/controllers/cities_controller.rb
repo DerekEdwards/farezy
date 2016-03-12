@@ -14,6 +14,7 @@ class CitiesController < ApplicationController
   end
 
   def edit
+    @admin = current_user
   end
 
   #This run when you click "Update City Details" on the edit page

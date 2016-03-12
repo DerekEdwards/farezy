@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -19,6 +19,13 @@ Rails.application.routes.draw do
       get 'edit'
       patch 'update_fare'
     end
+  end
+
+  devise_for :users 
+
+  #This is here beause :method => :delete was not working for destroying a user session
+  devise_scope :user do
+    get "/logout" => "devise/sessions#destroy"
   end
 
   # Example of regular route:
