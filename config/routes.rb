@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users 
+  devise_for :users, :skip => [:registrations] 
 
   #This is here beause :method => :delete was not working for destroying a user session
   devise_scope :user do
