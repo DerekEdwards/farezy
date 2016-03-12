@@ -4,6 +4,9 @@ class City < ActiveRecord::Base
   has_one :fare
   has_many :day_passes
 
+  #Scopes
+  scope :published, -> { where(:published => true) }
+
   #Methods
 
   #Check to see what the best cost and method is (individual trips/day pass/weekpass)

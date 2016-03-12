@@ -7,7 +7,7 @@ class CitiesController < ApplicationController
 
   def index
     logger.info("Index Event")
-    @cities = City.all.order(:name)
+    @cities = City.published.order(:name)
   end
 
   def show
@@ -19,9 +19,9 @@ class CitiesController < ApplicationController
 
   #This run when you click "Update City Details" on the edit page
   def update
-    
+    puts params.ai
     #Update City Attributes
-    new_attributes = {name: params[:name], note: params[:note], image_url: params[:image_url], font_color_hex: params[:font_color_hex], card_name: params[:card_name], map_url: params[:map_url]}
+    new_attributes = {name: params[:name], note: params[:note], image_url: params[:image_url], font_color_hex: params[:font_color_hex], card_name: params[:card_name], map_url: params[:map_url], published: params[:published].to_i}
     @city.update_attributes(new_attributes)
 
     respond_to do |format|

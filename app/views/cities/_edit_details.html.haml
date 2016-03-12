@@ -38,6 +38,17 @@
                 ="Map URL"
             %div.col-md-8   
               %input{:type => "string", :name => 'map_url', :value => @city.map_url, :style=>"width:100%;", :maxlength => "200"}
+          %div.row
+            %div.col-md-4
+              %strong{:style => "font-size:20px"}
+                ="Publish this Site"
+            %div.col-xs-4   
+              %div.col-xs-2{:style => "font-size:20px;"}
+                %input{:type => "radio", :name => :published, value: 1, checked: @city.published}
+                  Yes
+              %div.col-xs-2{:style => "font-size:20px;"}
+                %input{:type => "radio", :name => :published, value: 0, checked: !@city.published}
+                  No
 
 %div.row
   %center
