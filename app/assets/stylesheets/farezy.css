@@ -30,4 +30,8 @@
   background-color: initial;
 }
 
+.initially-hidden {
+  display: none;
+}
+
 

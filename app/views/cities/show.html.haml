@@ -24,10 +24,10 @@
                     %input{:type => "integer", :name => 'trips', :value => 2, :style=>"width:100%;", :maxlength => "100"}
         %div.col-md-3
     .row
-      %a.btn.btn-dark.btn-lg{:href => "#about", id: 'submit_best_fare'} Submit
+      %a.btn.btn-dark.btn-lg{id: 'submit_best_fare'} Submit
 
 / About
-%section#about.about
+%section#about.about.initially-hidden
   .container
     .row
       .col-lg-12.text-center
@@ -38,7 +38,7 @@
   / /.container
 / Services
 / The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/
-%section.steps-section#services.bg-primary
+%section.steps-section#services.bg-primary.initially-hidden
   .container
     .row.text-center#steps
       .col-lg-10.col-lg-offset-1
@@ -89,7 +89,7 @@
 %section.map-section
   =image_tag @city.map_url
 
-%aside.call-to-action.bg-primary
+%aside.call-to-action.bg-primary.hidden
   .container
     .row
       .col-lg-12.text-center
@@ -97,7 +97,7 @@
         %a.btn.btn-lg.btn-light{:href => "#"} Click Me!
         %a.btn.btn-lg.btn-dark{:href => "#"} Look at Me!
 / Footer
-%footer
+%footer.hidden
   .container
     .row
       .col-lg-10.col-lg-offset-1.text-center
@@ -139,6 +139,8 @@
            success: function(response) {
               $("#method_text").text(response['method_text']);
               $("#cost_text").text(response['cost_text']);
+              $(".initially-hidden").show();
+              location.href = "#about";
 
               task = response['task'];
               if (task == null){
