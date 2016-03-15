@@ -24,11 +24,11 @@
                     %input{:type => "integer", :name => 'trips', :value => 2, :style=>"width:100%;", :maxlength => "100"}
         %div.col-md-3
     .row
-      %a.btn.btn-dark.btn-lg{id: 'submit_best_fare'} Submit
+      %a.btn.btn-dark.btn-lg{:href => '#about', id: 'submit_best_fare'} Submit
 
 / About
-%section#about.about.initially-hidden
-  .container
+%section#about.about
+  .container.initially-hidden
     .row
       .col-lg-12.text-center
         %h2#method_text
@@ -140,7 +140,6 @@
               $("#method_text").text(response['method_text']);
               $("#cost_text").text(response['cost_text']);
               $(".initially-hidden").show();
-              location.href = "#about";
 
               task = response['task'];
               if (task == null){
