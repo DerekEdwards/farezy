@@ -6,4 +6,9 @@ class DayPass < ActiveRecord::Base
 
   #Scopes
   default_scope { order('days ASC') }
+
+  #Methods
+  def as_currency
+    ActionController::Base.helpers.number_to_currency(self.cost)
+  end
 end

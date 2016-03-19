@@ -89,13 +89,33 @@
 %section.map-section
   =image_tag @city.map_url
 
-%aside.call-to-action.bg-primary.hidden
+%aside.call-to-action.bg-primary
   .container
     .row
       .col-lg-12.text-center
-        %h3 The buttons below are impossible to resist.
-        %a.btn.btn-lg.btn-light{:href => "#"} Click Me!
-        %a.btn.btn-lg.btn-dark{:href => "#"} Look at Me!
+        %h2  
+          ="Fare Information for " + @city.name.to_s
+        %div.row
+          .col-lg-4
+          .col-lg-4.text-center.large-normal
+            %center
+              %div.row
+                .col-lg-7
+                  Avg 1-Way Fare*
+                .col-lg-5
+                  =@city.fare.as_currency
+
+              -@city.day_passes.each do |day_pass|
+                %div.row
+                  .col-lg-7
+                    =day_pass.days.to_s + "-Day Pass"
+                  .col-lg-5
+                    =day_pass.as_currency
+        %div.row.center
+          *1-Way fare may vary based on location and mode.  This is intended to be an estimate.
+
+        //%a.btn.btn-lg.btn-light{:href => "#"} Click Me!
+        //%a.btn.btn-lg.btn-dark{:href => "#"} Look at Me!
 / Footer
 %footer.hidden
   .container
