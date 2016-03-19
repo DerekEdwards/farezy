@@ -38,4 +38,6 @@
   font-size: 20px;
 }
 
-
+.translucent-panel {
+  background: rgba(0,0,0,0.75)
+}

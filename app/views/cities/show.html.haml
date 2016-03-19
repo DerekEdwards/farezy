@@ -8,20 +8,25 @@
         %div.col-md-3
         %div.col-md-6
           .panel
-            .panel-body
+            .panel-body.translucent-panel
               =form_tag(best_fare_city_path, id: 'best_fare_form', method: "get") do 
                 %div.row
-                  %div.col-md-10
-                    %strong{:style => "font-size:20px; color: #{@city.font_color_hex}"}
+                  %div.col-md-12
+                    %strong{:style => "font-size:25px; color: #{@city.font_color_hex};"}
                       ="How many days will you be visiting " + @city.name + "?"
-                  %div.col-md-2   
-                    %input{:type => "integer", :name => 'days', :value => 1, :style=>"width:100%;", :maxlength => "100"}
                 %div.row
-                  %div.col-md-10
-                    %strong{:style => "font-size:20px; color: #{@city.font_color_hex}"}
-                      ="Approximately, how many transit trips do you expect to take?"
+                  %div.col-md-5
                   %div.col-md-2   
-                    %input{:type => "integer", :name => 'trips', :value => 2, :style=>"width:100%;", :maxlength => "100"}
+                    %input{:type => "number", :min => 1, :name => 'days', :value => 1, :style=>"width:100%;", :maxlength => "100"}
+                %div.row
+                  %div.col-md-12
+                    %strong{:style => "font-size:25px; color: #{@city.font_color_hex}"}
+                      ="Approximately, how many transit trips do you expect to take?"
+                %div.row
+                  %div.col-md-5
+                  %div.col-md-2   
+                    %input{:type => "number", :name => 'trips', :value => 2, :style=>"width:100%;", :maxlength => "100"}
+             
         %div.col-md-3
     .row
       %a.btn.btn-dark.btn-lg{:href => '#about', id: 'submit_best_fare'} Submit
