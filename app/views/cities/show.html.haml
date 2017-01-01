@@ -86,16 +86,15 @@
                   %strong Service Name
                 %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 %a.btn.btn-light{:href => "#"} Learn More
-          / /.row (nested)
-      / /.col-lg-10
-    / /.row
-  / /.container
-/ Callout
+
+// MAP SECTION
 %section.map-section
   %h1
     ="System Map for " + @city.name.to_s
   =image_tag @city.map_url
 
+
+// FARE INFO SECION 
 %aside.call-to-action.bg-primary
   .container
     .row
@@ -121,8 +120,16 @@
         %div.row.center
           *1-Way fare may vary based on location and mode.  This is intended to be an estimate.
 
-        //%a.btn.btn-lg.btn-light{:href => "#"} Click Me!
-        //%a.btn.btn-lg.btn-dark{:href => "#"} Look at Me!
+// CONTACT SECTION
+-if @city.user
+  %section.contact-section
+    %h3
+      ="Date for this city is maintained by " + @city.user.name.to_s  
+      =' ('
+      =mail_to @city.user.email , @city.user.email, subject: "Farezy " + @city.name, target: "blank"
+      =')'
+
+
 / Footer
 %footer.hidden
   .container

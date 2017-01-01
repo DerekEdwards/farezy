@@ -3,6 +3,7 @@ class City < ActiveRecord::Base
   #Associatitions
   has_one :fare
   has_many :day_passes
+  belongs_to :user
 
   #Scopes
   scope :published, -> { where(:published => true) }

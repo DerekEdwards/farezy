@@ -1,7 +1,16 @@
 namespace :farezy do
   desc "Create sample data for testing"
   task create_sample_data: :environment do
-    
+
+    puts 'Creating a default admin'
+    u = User.where(email: "farezy@farezy.com").first_or_create do |user|
+      puts 'here'
+      user.password = 'farezy!!'
+      user.password_confirmation = 'farezy!!'
+      user.name = 'Farezy Admin'
+      user.save!
+    end
+
     #Atlanta
     puts "Creating/updating Atlanta . . . "
     c = City.find_or_create_by(name: "Atlanta")
@@ -9,6 +18,7 @@ namespace :farezy do
     c.font_color_hex = "#FFFFFF"
     c.card_name = "Breeze Card"
     c.map_url = "http://40.media.tumblr.com/tumblr_ltqywcrHTc1r54c4oo1_1280.jpg"
+    c.user = u
     c.save
 
     fare = Fare.find_or_initialize_by(city: c)
@@ -53,10 +63,11 @@ namespace :farezy do
     #Boston
     puts "Creating/updating Boston . . . "
     c = City.find_or_create_by(name: "Boston")
-    c.image_url = "http://7-themes.com/data_images/out/60/6978212-boston-city-2013.jpg"
+    c.image_url = "http://www.walldevil.com/wallpapers/a55/boston-massachusetts-usa.jpg"
     c.font_color_hex = "#FFFFFF"
     c.card_name = "Charlie Ticket"
     c.map_url = "http://www.mbta.com/images/subway-spider.jpg"
+    c.user = u
     c.save
 
     fare = Fare.find_or_initialize_by(city: c)
