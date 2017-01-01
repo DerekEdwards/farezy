@@ -124,7 +124,7 @@
 -if @city.user
   %section.contact-section
     %h3
-      ="Date for this city is maintained by " + @city.user.name.to_s  
+      ="Info for this city is maintained by " + @city.user.name.to_s  
       =' ('
       =mail_to @city.user.email , @city.user.email, subject: "Farezy " + @city.name, target: "blank"
       =')'
